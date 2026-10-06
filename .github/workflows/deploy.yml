@@ -28,7 +28,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -36,6 +36,11 @@ jobs:
 
       - name: Build site
         run: npm run build
+
+      # GitHub Pages serves this for direct visits to client-side routes.
+      # The copied page loads the app at the original URL, with no inline script.
+      - name: Support detail and gallery URLs
+        run: cp dist/index.html dist/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
